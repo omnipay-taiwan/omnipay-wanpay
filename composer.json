@@ -1,11 +1,11 @@
 {
-    "name": "omnipay-taiwan/omnipay-:gateway",
-    "description": ":gateway driver for the Omnipay payment processing library",
+    "name": "omnipay-taiwan/omnipay-wanpay",
+    "description": "WanPay driver for the Omnipay payment processing library",
     "keywords": [
         "omnipay",
-        ":gateway"
+        "WanPay"
     ],
-    "homepage": "https://github.com/omnipay-taiwan/omnipay-:gateway",
+    "homepage": "https://github.com/omnipay-taiwan/omnipay-wanpay",
     "license": "MIT",
     "authors": [
         {
@@ -24,12 +24,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Omnipay\\Skeleton\\": "src"
+            "Omnipay\\WanPay\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Omnipay\\Skeleton\\Tests\\": "tests"
+            "Omnipay\\WanPay\\Tests\\": "tests"
         }
     },
     "scripts": {

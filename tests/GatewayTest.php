@@ -1,20 +1,20 @@
 <?php
 
-namespace Omnipay\Skeleton\Tests;
+namespace Omnipay\WanPay\Tests;
 
-use Omnipay\Skeleton\SkeletonGateway;
+use Omnipay\WanPay\Gateway;
 use Omnipay\Tests\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
 {
-    /** @var SkeletonGateway */
+    /** @var Gateway */
     protected $gateway;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->gateway = new SkeletonGateway($this->getHttpClient(), $this->getHttpRequest());
+        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = [
             'amount' => '10.00',

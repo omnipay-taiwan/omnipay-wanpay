@@ -1,9 +1,9 @@
 <?php
 
-namespace Omnipay\Skeleton\Tests\Message;
+namespace Omnipay\WanPay\Tests\Message;
 
 use Omnipay\Common\CreditCard;
-use Omnipay\Skeleton\Message\AuthorizeRequest;
+use Omnipay\WanPay\Message\AuthorizeRequest;
 use Omnipay\Tests\TestCase;
 
 class AuthorizeRequestTest extends TestCase

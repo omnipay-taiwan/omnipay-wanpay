@@ -1,18 +1,18 @@
 <?php
 
-namespace Omnipay\Skeleton;
+namespace Omnipay\WanPay;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Skeleton\Message\AuthorizeRequest;
+use Omnipay\WanPay\Message\AuthorizeRequest;
 
 /**
- * Skeleton Gateway
+ * WanPay Gateway
  */
-class SkeletonGateway extends AbstractGateway
+class Gateway extends AbstractGateway
 {
     public function getName()
     {
-        return 'Skeleton';
+        return 'WanPay';
     }
 
     public function getDefaultParameters()
