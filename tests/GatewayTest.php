@@ -15,6 +15,10 @@ class GatewayTest extends GatewayTestCase
         parent::setUp();
 
         $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
+        $this->gateway->initialize([
+            'orgno' => '21008024',
+            'key' => 'QGbZvggxNdGgMUnp',
+        ]);
 
         $this->options = [
             'amount' => '10.00',

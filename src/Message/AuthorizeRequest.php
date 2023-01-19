@@ -2,6 +2,8 @@
 
 namespace Omnipay\WanPay\Message;
 
+use Omnipay\WanPay\Traits\HasWanPay;
+
 /**
  * Authorize Request
  *
@@ -9,6 +11,8 @@ namespace Omnipay\WanPay\Message;
  */
 class AuthorizeRequest extends AbstractRequest
 {
+    use HasWanPay;
+
     public function getData()
     {
         $this->validate('amount', 'card');
