@@ -2,8 +2,8 @@
 
 namespace Omnipay\WanPay\Tests;
 
-use Omnipay\WanPay\Gateway;
 use Omnipay\Tests\GatewayTestCase;
+use Omnipay\WanPay\Gateway;
 
 class GatewayTest extends GatewayTestCase
 {
@@ -19,21 +19,35 @@ class GatewayTest extends GatewayTestCase
             'orgno' => '21008024',
             'key' => 'QGbZvggxNdGgMUnp',
         ]);
-
-        $this->options = [
-            'amount' => '10.00',
-            'card' => $this->getValidCard(),
-        ];
     }
 
-    public function testAuthorize()
+    public function testPurchase()
     {
         $this->setMockHttpResponse('AuthorizeSuccess.txt');
 
-        $response = $this->gateway->authorize($this->options)->send();
+        $response = $this->gateway->purchase([
+            'secondtimestamp' => 1674157848,
+            'nonce_str' => 'nonce',
+            'sign' => 'abc',
+            'total_fee' => 100,
+            'out_trade_no' => '1000201701201708041015eNuBrl6P',
+            'returnurl' => 'https://foo.bar/returnurl',
+        ])->send();
 
-        $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('1234', $response->getTransactionReference());
-        $this->assertNull($response->getMessage());
+        self::assertFalse($response->isSuccessful());
+        self::assertTrue($response->isRedirect());
+        self::assertEquals('https://api.wan-pay.com/wxzfservice/waporder/', $response->getRedirectUrl());
+        self::assertEquals('POST', $response->getRedirectMethod());
+        self::assertEquals([
+            'orgno' => '21008024',
+            'secondtimestamp' => 1674157848,
+            'nonce_str' => 'nonce',
+            'sign' => '7052EFB30EA3421DC450DF1966002D79',
+            'total_fee' => 100,
+            'out_trade_no' => '1000201701201708041015eNuBrl6P',
+            'type' => 'AUTH_3DTRXTOKEN',
+            'returnurl' => 'https://foo.bar/returnurl',
+            'ipoolid' => '10703',
+        ], $response->getRedirectData());
     }
 }
