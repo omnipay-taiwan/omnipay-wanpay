@@ -3,6 +3,7 @@
 namespace Omnipay\WanPay;
 
 use Omnipay\Common\AbstractGateway;
+use Omnipay\WanPay\Message\CompletePurchaseRequest;
 use Omnipay\WanPay\Message\FetchTransactionRequest;
 use Omnipay\WanPay\Message\PurchaseRequest;
 use Omnipay\WanPay\Traits\HasWanPay;
@@ -31,6 +32,11 @@ class Gateway extends AbstractGateway
     public function purchase(array $options = [])
     {
         return $this->createRequest(PurchaseRequest::class, $options);
+    }
+
+    public function completePurchase(array $options = [])
+    {
+        return $this->createRequest(CompletePurchaseRequest::class, $options);
     }
 
     public function fetchTransaction(array $options = [])

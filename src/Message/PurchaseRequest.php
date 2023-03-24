@@ -17,16 +17,6 @@ class PurchaseRequest extends AbstractRequest
     use HasAmount;
     use HasCommon;
 
-    public function getTotalFee()
-    {
-        return $this->getAmount();
-    }
-
-    public function setTotalFee($value)
-    {
-        return $this->setAmount($value);
-    }
-
     public function getType()
     {
         return $this->getParameter('type');

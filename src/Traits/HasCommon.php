@@ -36,6 +36,26 @@ trait HasCommon
         return $this->setParameter('nonce_str', $value);
     }
 
+    public function getSign()
+    {
+        return $this->getParameter('sign');
+    }
+
+    public function setSign($value)
+    {
+        return $this->setParameter('sign', $value);
+    }
+
+    public function getTotalFee()
+    {
+        return $this->getAmount();
+    }
+
+    public function setTotalFee($value)
+    {
+        return $this->setAmount($value);
+    }
+
     private function getNonceHashStr()
     {
         return substr(md5($this->getTransactionId()), 0, 8);
