@@ -6,7 +6,9 @@ trait HasCommon
 {
     public function getSecondTimestamp()
     {
-        return $this->getParameter('secondtimestamp') ?? time();
+        $secondTimestamp = $this->getParameter('secondtimestamp');
+
+        return ! empty($secondTimestamp) ? $secondTimestamp : time();
     }
 
     public function setSecondTimestamp($value)

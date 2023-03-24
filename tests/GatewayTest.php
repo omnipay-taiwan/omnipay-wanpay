@@ -72,7 +72,7 @@ class GatewayTest extends GatewayTestCase
         ])->send();
 
         self::assertTrue($response->isSuccessful());
-        self::assertEquals('0000', $response->isSuccessful());
+        self::assertEquals('0000', $response->getCode());
         self::assertEquals('1000201701201708041015eNuBrl6P', $response->getTransactionId());
     }
 }
