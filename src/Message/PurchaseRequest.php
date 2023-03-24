@@ -7,11 +7,13 @@ use Omnipay\Common\ItemInterface;
 use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\WanPay\Helper;
 use Omnipay\WanPay\Item;
+use Omnipay\WanPay\Traits\HasAmount;
 use Omnipay\WanPay\Traits\HasWanPay;
 
 class PurchaseRequest extends AbstractRequest
 {
     use HasWanPay;
+    use HasAmount;
 
     public function getSecondTimestamp()
     {
