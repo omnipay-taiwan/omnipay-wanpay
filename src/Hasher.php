@@ -17,13 +17,23 @@ class Hasher
             unset($data['sign']);
         }
 
-        ksort($data);
-        $result = [];
-        foreach ($data as $key => $value) {
-            $result[] = "$key=$value";
+        if (array_key_exists('key', $data)) {
+            unset($data['key']);
         }
-        $result[] = "key=$this->secret";
 
-        return strtoupper(md5(implode('&', $result)));
+        $data = array_filter($data, static function ($value) {
+            return ! empty($value);
+        });
+
+        ksort($data);
+        $data['key'] = $this->secret;
+
+        $body = '';
+        foreach ($data as $key => $value) {
+            $body .= $key.'='.$value.'&';
+        }
+        $body = substr($body, 0, -1);
+
+        return strtoupper(md5($body));
     }
 }

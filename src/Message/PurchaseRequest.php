@@ -2,7 +2,9 @@
 
 namespace Omnipay\WanPay\Message;
 
+use JsonException;
 use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\ItemBag;
 use Omnipay\Common\ItemInterface;
 use Omnipay\WanPay\Item;
@@ -157,8 +159,31 @@ class PurchaseRequest extends AbstractRequest
         return $this->mergeSign($data);
     }
 
+    /**
+     * @throws InvalidResponseException
+     * @throws JsonException
+     */
     public function sendData($data)
     {
-        return $this->response = new PurchaseResponse($this, $data);
+        $body = '';
+        foreach ($data as $key => $value) {
+            $body .= $key.'='.$value.'&';
+        }
+        $body = substr($body, 0, -1);
+
+        $response = $this->httpClient->request(
+            'POST',
+            $this->getEndpoint().'wxzfservice/waporder',
+            ['Content-Type' => 'application/x-www-form-urlencoded'],
+            $body
+        );
+
+        $responseData = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+
+        if ($responseData['status'] !== '900') {
+            throw new InvalidResponseException($responseData['info'], $responseData['status']);
+        }
+
+        return $this->response = new PurchaseResponse($this, $responseData['data']);
     }
 }

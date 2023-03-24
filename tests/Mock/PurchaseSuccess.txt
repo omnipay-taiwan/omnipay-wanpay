@@ -1,0 +1,15 @@
+HTTP/1.1 200 OK
+Server: Apache
+Date: Sun, 11 May 2014 21:17:31 GMT
+Content-Type: application/json; charset=utf-8
+Status: 200 OK
+
+
+{
+  "status": "900",
+  "info": "下單成功",
+  "data": {
+    "html": "https://ixmfree.net/index.php?g=wxuser&m=payment&a=fast",
+    "out_trade_no": "100020170117111010101"
+  }
+}

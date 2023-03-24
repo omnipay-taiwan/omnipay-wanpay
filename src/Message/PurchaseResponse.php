@@ -19,16 +19,16 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
 
     public function getRedirectUrl()
     {
-        return $this->request->getEndpoint().'wxzfservice/waporder';
+        return $this->data['html'];
     }
 
     public function getRedirectMethod()
     {
-        return 'POST';
+        return 'GET';
     }
 
-    public function getRedirectData()
+    public function getTransactionId()
     {
-        return $this->getData();
+        return $this->data['out_trade_no'];
     }
 }

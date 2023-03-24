@@ -9,19 +9,21 @@ class HasherTest extends TestCase
 {
     public function testGenerate(): void
     {
-        $hasher = new Hasher('n12bQ9Ew1_2342X4rEcO');
+        $hasher = new Hasher('sbgSpVkimGvNgRnu');
         $data = [
-            't0t1' => 'T1',
-            'secondtimestamp' => '1489215551',
-            'orgno' => '1265',
-            'total_fee' => '8888',
-            'nonce_str' => '71669965',
+            'backurl' => 'https://test.com',
             'body' => 'good',
+            'currency' => 'USD',
+            'nonce_str' => '84778745',
+            'orgno' => '21004280',
+            'out_trade_no' => '20230327093049',
+            'returnurl' => 'https://test.com',
+            'secondtimestamp' => '1679880649',
+            't0t1' => 'T1',
+            'total_fee' => '1',
+            'key' => 'sbgSpVkimGvNgRnu',
         ];
 
-        self::assertEquals(
-            'CF949AE048C0C3B23D5FADFE9495B319',
-            $hasher->make($data)
-        );
+        self::assertEquals('2100EA95EFC3BEAF774EF536FAB8B132', $hasher->make($data));
     }
 }
