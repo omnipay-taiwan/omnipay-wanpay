@@ -3,6 +3,9 @@
 namespace Omnipay\WanPay;
 
 use Omnipay\Common\AbstractGateway;
+use Omnipay\Common\Message\NotificationInterface;
+use Omnipay\Common\Message\RequestInterface;
+use Omnipay\WanPay\Message\AcceptNotificationRequest;
 use Omnipay\WanPay\Message\CompletePurchaseRequest;
 use Omnipay\WanPay\Message\FetchTransactionRequest;
 use Omnipay\WanPay\Message\PurchaseRequest;
@@ -37,6 +40,14 @@ class Gateway extends AbstractGateway
     public function completePurchase(array $options = [])
     {
         return $this->createRequest(CompletePurchaseRequest::class, $options);
+    }
+
+    /**
+     * @return RequestInterface|NotificationInterface
+     */
+    public function acceptNotification(array $options = [])
+    {
+        return $this->createRequest(AcceptNotificationRequest::class, $options);
     }
 
     public function fetchTransaction(array $options = [])
