@@ -4,11 +4,9 @@ namespace Omnipay\WanPay\Message;
 
 use Omnipay\WanPay\Traits\HasAmount;
 use Omnipay\WanPay\Traits\HasCommon;
-use Omnipay\WanPay\Traits\HasWanPay;
 
 class CompletePurchaseRequest extends AbstractRequest
 {
-    use HasWanPay;
     use HasAmount;
     use HasCommon;
 

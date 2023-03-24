@@ -13,22 +13,11 @@ class FetchTransactionResponse extends AbstractResponse
 
     public function getCode()
     {
-        return $this->getResult('orderstatus');
+        return $this->data['orderstatus'];
     }
 
     public function getTransactionId()
     {
-        return $this->getResult('out_trade_no');
-    }
-
-    public function getResult($key)
-    {
-        $data = $this->getData();
-
-        if (empty($data['data']) || empty($data['data'][$key])) {
-            return null;
-        }
-
-        return $data['data'][$key];
+        return $this->data['out_trade_no'];
     }
 }

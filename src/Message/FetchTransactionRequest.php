@@ -2,13 +2,11 @@
 
 namespace Omnipay\WanPay\Message;
 
-use Omnipay\WanPay\Hasher;
+use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\WanPay\Traits\HasCommon;
-use Omnipay\WanPay\Traits\HasWanPay;
 
 class FetchTransactionRequest extends AbstractRequest
 {
-    use HasWanPay;
     use HasCommon;
 
     public function getData()
@@ -26,16 +24,12 @@ class FetchTransactionRequest extends AbstractRequest
             return ! empty($value);
         });
 
-        $hasher = new Hasher($this->getKey());
-
-        return array_merge([
-            'orgno' => '',
-            'secondtimestamp' => '',
-            'nonce_str' => '',
-            'sign' => $hasher->make($data),
-        ], $data);
+        return $this->mergeSign($data);
     }
 
+    /**
+     * @throws InvalidResponseException
+     */
     public function sendData($data)
     {
         $response = $this->httpClient->request(
@@ -44,9 +38,13 @@ class FetchTransactionRequest extends AbstractRequest
             $data
         );
 
-        return $this->response = new FetchTransactionResponse(
-            $this,
-            json_decode((string) $response->getBody(), true)
-        );
+        $body = (string) $response->getBody();
+        $responseData = json_decode($body, true);
+
+        if (empty($responseData['status']) || $responseData['status'] !== '900') {
+            throw new InvalidResponseException($body);
+        }
+
+        return $this->response = new FetchTransactionResponse($this, $responseData['data']);
     }
 }

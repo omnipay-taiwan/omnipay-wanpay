@@ -56,8 +56,6 @@ class GatewayTest extends GatewayTestCase
 
         $response = $this->gateway->completePurchase($options)->send();
 
-        var_dump($response->getData());
-
         self::assertTrue($response->isSuccessful());
         self::assertEquals('0000', $response->getCode());
         self::assertEquals('040911560243087HRC', $response->getTransactionId());

@@ -12,6 +12,6 @@ Status: 200 OK
         "out_trade_no": "1000201701201708041015eNuBrl6P",
         "orderstatus": "0000",
         "authcode": "516873",
-        "bankcard ": "524255******8104"
+        "bankcard": "524255******8104"
     }
 }

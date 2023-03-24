@@ -5,15 +5,12 @@ namespace Omnipay\WanPay\Message;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\ItemBag;
 use Omnipay\Common\ItemInterface;
-use Omnipay\WanPay\Hasher;
 use Omnipay\WanPay\Item;
 use Omnipay\WanPay\Traits\HasAmount;
 use Omnipay\WanPay\Traits\HasCommon;
-use Omnipay\WanPay\Traits\HasWanPay;
 
 class PurchaseRequest extends AbstractRequest
 {
-    use HasWanPay;
     use HasAmount;
     use HasCommon;
 
@@ -157,14 +154,7 @@ class PurchaseRequest extends AbstractRequest
             return ! empty($value);
         });
 
-        $hasher = new Hasher($this->getKey());
-
-        return array_merge([
-            'orgno' => '',
-            'secondtimestamp' => '',
-            'nonce_str' => '',
-            'sign' => $hasher->make($data),
-        ], $data);
+        return $this->mergeSign($data);
     }
 
     public function sendData($data)
