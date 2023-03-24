@@ -25,7 +25,7 @@ abstract class AbstractRequest extends BaseAbstractRequest
         ], $data);
     }
 
-    private function makeHash(array $data)
+    protected function makeHash(array $data)
     {
         $hasher = new Hasher($this->getKey());
 
