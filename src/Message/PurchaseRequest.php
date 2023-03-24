@@ -2,48 +2,20 @@
 
 namespace Omnipay\WanPay\Message;
 
+use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\ItemBag;
 use Omnipay\Common\ItemInterface;
-use Omnipay\Common\Message\AbstractRequest;
-use Omnipay\WanPay\Helper;
+use Omnipay\WanPay\Hasher;
 use Omnipay\WanPay\Item;
 use Omnipay\WanPay\Traits\HasAmount;
+use Omnipay\WanPay\Traits\HasCommon;
 use Omnipay\WanPay\Traits\HasWanPay;
 
 class PurchaseRequest extends AbstractRequest
 {
     use HasWanPay;
     use HasAmount;
-
-    public function getSecondTimestamp()
-    {
-        return $this->getParameter('secondtimestamp') ?? time();
-    }
-
-    public function setSecondTimestamp($value)
-    {
-        return $this->setParameter('secondtimestamp', $value);
-    }
-
-    public function getNonceStr()
-    {
-        return $this->getParameter('nonce_str');
-    }
-
-    public function setNonceStr($value)
-    {
-        return $this->setParameter('nonce_str', $value);
-    }
-
-    public function getSign()
-    {
-        return $this->getParameter('sign');
-    }
-
-    public function setSign($value)
-    {
-        return $this->setParameter('sign', $value);
-    }
+    use HasCommon;
 
     public function getTotalFee()
     {
@@ -53,16 +25,6 @@ class PurchaseRequest extends AbstractRequest
     public function setTotalFee($value)
     {
         return $this->setAmount($value);
-    }
-
-    public function getOutTradeNo()
-    {
-        return $this->getTransactionId();
-    }
-
-    public function setOutTradeNo($value)
-    {
-        return $this->setTransactionId($value);
     }
 
     public function getType()
@@ -175,15 +137,18 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('items', $itemBag);
     }
 
+    /**
+     * @throws InvalidRequestException
+     */
     public function getData()
     {
         $this->validate('orgno', 'amount', 'transactionId', 'returnUrl');
 
-        $data = array_filter([
+        $data = [
             'orgno' => $this->getOrgNo(),
             'secondtimestamp' => $this->getSecondTimestamp(),
-            'nonce_str' => $this->getNonceStr() ?? Helper::random(),
-            'total_fee' => (int) $this->getAmount(),
+            'nonce_str' => $this->getNonceStr(),
+            'total_fee' => $this->getAmount().'00',
             'out_trade_no' => $this->getTransactionId(),
             'type' => $this->getType() ?? 'AUTH_3DTRXTOKEN',
             'returnurl' => $this->getReturnUrl(),
@@ -196,15 +161,19 @@ class PurchaseRequest extends AbstractRequest
             'productlist' => $this->getProductList(),
             'currency' => $this->getCurrency(),
             'memberno' => $this->getMemberNo(),
-        ], static function ($value) {
+        ];
+
+        $data = array_filter($data, static function ($value) {
             return ! empty($value);
         });
+
+        $hasher = new Hasher($this->getKey());
 
         return array_merge([
             'orgno' => '',
             'secondtimestamp' => '',
             'nonce_str' => '',
-            'sign' => Helper::sign($data, $this->getKey()),
+            'sign' => $hasher->make($data),
         ], $data);
     }
 

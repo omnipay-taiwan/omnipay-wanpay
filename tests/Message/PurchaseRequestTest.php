@@ -24,7 +24,6 @@ class PurchaseRequestTest extends TestCase
 
         $options = [
             'secondtimestamp' => 1674157848,
-            'nonce_str' => 'nonce',
             'total_fee' => 100,
             'out_trade_no' => '1000201701201708041015eNuBrl6P',
             'type' => 'AUTH_3DTRXTOKEN',
@@ -63,9 +62,9 @@ class PurchaseRequestTest extends TestCase
         self::assertEquals([
             'orgno' => '21008024',
             'secondtimestamp' => 1674157848,
-            'nonce_str' => 'nonce',
-            'sign' => 'C5F70B5FB1CB14265423FEC5304F0D88',
-            'total_fee' => 100,
+            'nonce_str' => '8c90afc4',
+            'sign' => '4FADE949618C9800F707DC83A227C91A',
+            'total_fee' => '10000',
             'out_trade_no' => '1000201701201708041015eNuBrl6P',
             'type' => 'AUTH_3DTRXTOKEN',
             'returnurl' => 'https://foo.bar/returnurl',

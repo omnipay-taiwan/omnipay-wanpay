@@ -1,0 +1,17 @@
+HTTP/1.1 200 OK
+Server: Apache
+Date: Sun, 11 May 2014 21:17:31 GMT
+Content-Type: application/json; charset=utf-8
+Status: 200 OK
+
+{
+    "status": "900",
+    "info": "查詢訂單成功",
+    "data": {
+        "total_fee": 100,
+        "out_trade_no": "1000201701201708041015eNuBrl6P",
+        "orderstatus": "0000",
+        "authcode": "516873",
+        "bankcard ": "524255******8104"
+    }
+}

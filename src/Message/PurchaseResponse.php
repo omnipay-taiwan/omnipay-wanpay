@@ -19,7 +19,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
 
     public function getRedirectUrl()
     {
-        return 'https://api.wan-pay.com/wxzfservice/waporder/';
+        return $this->request->getEndpoint().'wxzfservice/waporder';
     }
 
     public function getRedirectMethod()

@@ -2,13 +2,14 @@
 
 namespace Omnipay\WanPay\Tests;
 
-use Omnipay\WanPay\Helper;
+use Omnipay\WanPay\Hasher;
 use PHPUnit\Framework\TestCase;
 
-class HelperTest extends TestCase
+class HasherTest extends TestCase
 {
     public function testGenerate(): void
     {
+        $hasher = new Hasher('n12bQ9Ew1_2342X4rEcO');
         $data = [
             't0t1' => 'T1',
             'secondtimestamp' => '1489215551',
@@ -20,7 +21,7 @@ class HelperTest extends TestCase
 
         self::assertEquals(
             'CF949AE048C0C3B23D5FADFE9495B319',
-            Helper::sign($data, 'n12bQ9Ew1_2342X4rEcO')
+            $hasher->make($data)
         );
     }
 }
