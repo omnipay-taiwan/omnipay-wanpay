@@ -27,8 +27,6 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
     protected function makeHash(array $data)
     {
-        $hasher = new Hasher($this->getKey());
-
-        return $hasher->make($data);
+        return (new Hasher($this->getKey()))->make($data);
     }
 }
