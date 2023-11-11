@@ -18,6 +18,22 @@ class AcceptNotificationRequest extends CompletePurchaseRequest implements Notif
     /**
      * @return string
      */
+    public function getTransactionId()
+    {
+        return $this->getNotificationResponse()->getTransactionId();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransactionReference()
+    {
+        return $this->getNotificationResponse()->getTransactionReference();
+    }
+
+    /**
+     * @return string
+     */
     public function getTransactionStatus()
     {
         return $this->getNotificationResponse()->getTransactionStatus();

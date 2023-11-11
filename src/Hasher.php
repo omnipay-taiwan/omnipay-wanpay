@@ -34,6 +34,6 @@ class Hasher
         }
         $body = substr($body, 0, -1);
 
-        return strtoupper(md5($body));
+        return strtoupper(md5((string) $body));
     }
 }

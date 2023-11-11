@@ -62,10 +62,11 @@ class GatewayTest extends GatewayTestCase
     {
         $response = 'https://member.healthchain.com.tw/MHC01SSV2TEST/Checkout/CheckOutShowResultWangPay.aspx?authcode=154566&bankcard=552199******1898&nonce_str=46444248&orgno=21001719&out_trade_no=040911560243087HRC&result=核准&secondtimestamp=1586404583&status=0000&total_fee=100&orderdate=2020-04-09 11:56:02&trxtoken=&storename=旺旺電子商務-快點付&details=固定金額 免收件地址&payername=0409&payermobile=0409&payeremail=0409&sign=7F015EB2B4674CD76C9C62090B6DF3E2';
         $parsed = parse_url($response);
-        $options = [];
-        parse_str($parsed['query'], $options);
+        $data = [];
+        parse_str($parsed['query'], $data);
 
-        $response = $this->gateway->completePurchase($options)->send();
+        $this->getHttpRequest()->request->add($data);
+        $response = $this->gateway->completePurchase()->send();
 
         self::assertTrue($response->isSuccessful());
         self::assertEquals('0000', $response->getCode());
@@ -77,10 +78,11 @@ class GatewayTest extends GatewayTestCase
     {
         $response = 'https://member.healthchain.com.tw/MHC01SSV2TEST/Checkout/CheckOutShowResultWangPay.aspx?authcode=154566&bankcard=552199******1898&nonce_str=46444248&orgno=21001719&out_trade_no=040911560243087HRC&result=核准&secondtimestamp=1586404583&status=0000&total_fee=100&orderdate=2020-04-09 11:56:02&trxtoken=&storename=旺旺電子商務-快點付&details=固定金額 免收件地址&payername=0409&payermobile=0409&payeremail=0409&sign=C720CD30C24DB5A372A33B90D2906C46';
         $parsed = parse_url($response);
-        $options = [];
-        parse_str($parsed['query'], $options);
+        $data = [];
+        parse_str($parsed['query'], $data);
 
-        $request = $this->gateway->acceptNotification($options);
+        $this->getHttpRequest()->request->add($data);
+        $request = $this->gateway->acceptNotification();
         self::assertEquals('核准', $request->getMessage());
         self::assertEquals(NotificationInterface::STATUS_COMPLETED, $request->getTransactionStatus());
 

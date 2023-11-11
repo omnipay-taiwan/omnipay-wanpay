@@ -2,7 +2,6 @@
 
 namespace Omnipay\WanPay\Message;
 
-use JsonException;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\ItemBag;
@@ -178,7 +177,7 @@ class PurchaseRequest extends AbstractRequest
             $body
         );
 
-        $responseData = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        $responseData = json_decode((string) $response->getBody(), true);
 
         if ($responseData['status'] !== '900') {
             throw new InvalidResponseException($responseData['info'], $responseData['status']);
