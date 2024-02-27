@@ -2,9 +2,7 @@
 
 namespace Omnipay\WanPay\Message;
 
-use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\WanPay\Traits\HasAmount;
-use Omnipay\WanPay\Traits\HasCommon;
+use Omnipay\Common\Exception\InvalidResponseException;
 
 class CompletePurchaseRequest extends AbstractRequest
 {
@@ -14,12 +12,12 @@ class CompletePurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @throws InvalidRequestException
+     * @throws InvalidResponseException
      */
     public function sendData($data)
     {
         if (! hash_equals($this->httpRequest->request->get('sign', ''), $this->makeHash($data))) {
-            throw new InvalidRequestException('Incorrect hash');
+            throw new InvalidResponseException('Incorrect hash');
         }
 
         return $this->response = new CompletePurchaseResponse($this, $data);
